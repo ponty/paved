@@ -1,0 +1,165 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>paved.django &mdash; paved v0.2 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="paved v0.2 documentation" href="index.html" />
+    <link rel="up" title="API" href="api.html" />
+    <link rel="next" title="paved.util" href="api.paved.util.html" />
+    <link rel="prev" title="paved.docs" href="api.paved.docs.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api.paved.util.html" title="paved.util"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api.paved.docs.html" title="paved.docs"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">paved v0.2 documentation</a> &raquo;</li>
+          <li><a href="api.html" accesskey="U">API</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="paved-django">
+<h1>paved.django<a class="headerlink" href="#paved-django" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-paved.django"></span><p>paved.django &#8211; common tasks for django projects.</p>
+<dl class="function">
+<dt id="paved.django.manage">
+<tt class="descclassname">paved.django.</tt><tt class="descname">manage</tt><big>(</big><em>args</em><big>)</big><a class="reference internal" href="_modules/paved/django.html#manage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#paved.django.manage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the provided commands against Django&#8217;s manage.py</p>
+<dl class="docutils">
+<dt><cite>options.paved.django.settings</cite>: the dotted path to the django</dt>
+<dd>project module containing settings.</dd>
+<dt><cite>options.paved.django.manage_py</cite>: the path where the django</dt>
+<dd>project&#8217;s <cite>manage.py</cite> resides.</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="paved.django.call_manage">
+<tt class="descclassname">paved.django.</tt><tt class="descname">call_manage</tt><big>(</big><em>cmd</em><big>)</big><a class="reference internal" href="_modules/paved/django.html#call_manage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#paved.django.call_manage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Utility function to run commands against Django&#8217;s <cite>django-admin.py</cite>/<cite>manage.py</cite>.</p>
+<dl class="docutils">
+<dt><cite>options.paved.django.project</cite>: the path to the django project</dt>
+<dd>files (where <cite>settings.py</cite> typically resides).</dd>
+<dt><cite>options.paved.django.manage_py</cite>: the path where the django</dt>
+<dd>project&#8217;s <cite>manage.py</cite> resides.</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="paved.django.syncdb">
+<tt class="descclassname">paved.django.</tt><tt class="descname">syncdb</tt><big>(</big><em>args</em><big>)</big><a class="reference internal" href="_modules/paved/django.html#syncdb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#paved.django.syncdb" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the database with model schema. Shorthand for <cite>paver manage syncdb</cite>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="paved.django.shell">
+<tt class="descclassname">paved.django.</tt><tt class="descname">shell</tt><big>(</big><em>info</em><big>)</big><a class="reference internal" href="_modules/paved/django.html#shell"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#paved.django.shell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the ipython shell. Shorthand for <cite>paver manage shell</cite>.</p>
+<p>Uses <cite>django_extensions &lt;http://pypi.python.org/pypi/django-extensions/0.5&gt;</cite>, if
+available, to provide <cite>shell_plus</cite>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="paved.django.start">
+<tt class="descclassname">paved.django.</tt><tt class="descname">start</tt><big>(</big><em>info</em><big>)</big><a class="reference internal" href="_modules/paved/django.html#start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#paved.django.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the dev server.</p>
+<p>Uses <cite>django_extensions &lt;http://pypi.python.org/pypi/django-extensions/0.5&gt;</cite>, if
+available, to provide <cite>runserver_plus</cite>.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="api.paved.docs.html"
+                        title="previous chapter">paved.docs</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="api.paved.util.html"
+                        title="next chapter">paved.util</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/api.paved.django.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api.paved.util.html" title="paved.util"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="api.paved.docs.html" title="paved.docs"
+             >previous</a> |</li>
+        <li><a href="index.html">paved v0.2 documentation</a> &raquo;</li>
+          <li><a href="api.html" >API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, David Eyk.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

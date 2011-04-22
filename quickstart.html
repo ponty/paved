@@ -1,0 +1,153 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Quickstart &mdash; paved v0.2 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="paved v0.2 documentation" href="index.html" />
+    <link rel="next" title="API" href="api.html" />
+    <link rel="prev" title="Welcome to paved’s documentation!" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api.html" title="API"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to paved’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">paved v0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="quickstart">
+<h1>Quickstart<a class="headerlink" href="#quickstart" title="Permalink to this headline">¶</a></h1>
+<p>Paved comes with several task bundles configured to work out of the
+box for the most common use-cases. You use them by importing their
+members into your pavement.py&#8217;s module namespace.</p>
+<p>As a quick example, let&#8217;s start a new Django project. We create our
+pavement.py:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;pavement.py -- paver tasks for our new Django project!</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">paver.easy</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">__path__</span> <span class="o">=</span> <span class="n">path</span><span class="p">(</span><span class="n">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">abspath</span><span class="p">()</span><span class="o">.</span><span class="n">dirname</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Now we add these two lines:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">paved.django</span> <span class="kn">import</span> <span class="n">manage</span>
+
+<span class="n">options</span><span class="o">.</span><span class="n">paved</span><span class="o">.</span><span class="n">django</span><span class="o">.</span><span class="n">manage_py</span> <span class="o">=</span> <span class="n">__path__</span> <span class="o">/</span> <span class="s">&#39;myproject&#39;</span> <span class="o">/</span> <span class="s">&#39;manage.py&#39;</span>
+</pre></div>
+</div>
+<p>Suddenly, we can start doing things like:</p>
+<div class="highlight-python"><pre>$ paver manage syncdb</pre>
+</div>
+<p>This will run our django project&#8217;s <cite>manage.py</cite> file with <cite>syncdb</cite> as
+the first argument. All of Django&#8217;s manage commands are available to
+us now.</p>
+<p>Once we&#8217;re ready for our first release, having made sure that our
+setup() metadata is all there, we add this to the imports:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">paved.dist</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<p>Now <cite>sdist</cite> is hooked up as described in Paver&#8217;s documentation:</p>
+<div class="highlight-python"><pre>$ paver sdist</pre>
+</div>
+<p>This produces a <cite>bootstrap.py</cite>, <cite>setup.py</cite>, <cite>paver-minilib.zip</cite>, as
+well as a (configurable) <cite>MANIFEST.in</cite> that does the right stuff by
+default. Finally, you&#8217;ll find your source distribution file in the
+<cite>dist/</cite> folder, as you might expect.</p>
+<p>Read the <a class="reference internal" href="api.html"><em>API documentation</em></a> to find out more about the tasks and
+utilities available.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to paved&#8217;s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="api.html"
+                        title="next chapter">API</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/quickstart.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api.html" title="API"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to paved’s documentation!"
+             >previous</a> |</li>
+        <li><a href="index.html">paved v0.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, David Eyk.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

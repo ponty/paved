@@ -1,0 +1,151 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>paved.dist &mdash; paved v0.2 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="paved v0.2 documentation" href="index.html" />
+    <link rel="up" title="API" href="api.html" />
+    <link rel="next" title="paved.docs" href="api.paved.docs.html" />
+    <link rel="prev" title="paved.pkg" href="api.paved.pkg.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api.paved.docs.html" title="paved.docs"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api.paved.pkg.html" title="paved.pkg"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">paved v0.2 documentation</a> &raquo;</li>
+          <li><a href="api.html" accesskey="U">API</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-paved.dist">
+<span id="paved-dist"></span><h1>paved.dist<a class="headerlink" href="#module-paved.dist" title="Permalink to this headline">¶</a></h1>
+<p>paved.dist &#8211; distribution tasks</p>
+<dl class="function">
+<dt id="paved.dist.get_distribute">
+<tt class="descclassname">paved.dist.</tt><tt class="descname">get_distribute</tt><big>(</big><em>options</em><big>)</big><a class="reference internal" href="_modules/paved/dist.html#get_distribute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#paved.dist.get_distribute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieve a copy of distribute_setup.py for distribution.</p>
+<p><cite>options.paved.dist.distribute_url</cite>: the URL to download the
+<cite>distribute_setup.py</cite> file from.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="paved.dist.sdist">
+<tt class="descclassname">paved.dist.</tt><tt class="descname">sdist</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/paved/dist.html#sdist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#paved.dist.sdist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides sdist to make sure that our setup.py is generated.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="paved.dist.upload">
+<tt class="descclassname">paved.dist.</tt><tt class="descname">upload</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/paved/dist.html#upload"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#paved.dist.upload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Upload the package to PyPI.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="paved.dist.manifest">
+<tt class="descclassname">paved.dist.</tt><tt class="descname">manifest</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/paved/dist.html#manifest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#paved.dist.manifest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Guarantee the existence of a basic MANIFEST.in.</p>
+<p>manifest doc: <a class="reference external" href="http://docs.python.org/distutils/sourcedist.html#manifest">http://docs.python.org/distutils/sourcedist.html#manifest</a></p>
+<p><cite>options.paved.dist.manifest.include</cite>: set of files (or globs) to include with the <cite>include</cite> directive.</p>
+<p><cite>options.paved.dist.manifest.recursive_include</cite>: set of files (or globs) to include with the <cite>recursive-include</cite> directive.</p>
+<p><cite>options.paved.dist.manifest.prune</cite>: set of files (or globs) to exclude with the <cite>prune</cite> directive.</p>
+<p><cite>options.paved.dist.manifest.include_sphinx_docroot</cite>: True -&gt; sphinx docroot is added as <cite>grant</cite></p>
+<p><cite>options.paved.dist.manifest.include_sphinx_docroot</cite>: True -&gt; sphinx builddir is added as <cite>prune</cite></p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="api.paved.pkg.html"
+                        title="previous chapter">paved.pkg</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="api.paved.docs.html"
+                        title="next chapter">paved.docs</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/api.paved.dist.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api.paved.docs.html" title="paved.docs"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="api.paved.pkg.html" title="paved.pkg"
+             >previous</a> |</li>
+        <li><a href="index.html">paved v0.2 documentation</a> &raquo;</li>
+          <li><a href="api.html" >API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, David Eyk.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

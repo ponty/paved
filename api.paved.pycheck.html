@@ -1,0 +1,187 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>paved.pycheck &mdash; paved v0.2 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="paved v0.2 documentation" href="index.html" />
+    <link rel="up" title="API" href="api.html" />
+    <link rel="prev" title="paved.util" href="api.paved.util.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api.paved.util.html" title="paved.util"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">paved v0.2 documentation</a> &raquo;</li>
+          <li><a href="api.html" accesskey="U">API</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-paved.pycheck">
+<span id="paved-pycheck"></span><h1>paved.pycheck<a class="headerlink" href="#module-paved.pycheck" title="Permalink to this headline">¶</a></h1>
+<p>pycheck &#8211; check python code.</p>
+<dl class="function">
+<dt id="paved.pycheck.pycheckall">
+<tt class="descclassname">paved.pycheck.</tt><tt class="descname">pycheckall</tt><big>(</big><big>)</big><a class="headerlink" href="#paved.pycheck.pycheckall" title="Permalink to this definition">¶</a></dt>
+<dd><p>All pycheck tasks.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="paved.pycheck.sloccount">
+<tt class="descclassname">paved.pycheck.</tt><tt class="descname">sloccount</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/paved/pycheck.html#sloccount"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#paved.pycheck.sloccount" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print &#8220;Source Lines of Code&#8221; and export to file.</p>
+<p>Export is <a class="reference external" href="http://hudson-ci.org/">hudson</a> <a class="reference external" href="http://wiki.hudson-ci.org/display/HUDSON/SLOCCount+Plugin">plugin</a> compatible: sloccount.sc</p>
+<dl class="docutils">
+<dt>requirements:</dt>
+<dd><ul class="first last simple">
+<li><a class="reference external" href="http://www.dwheeler.com/sloccount/">sloccount</a> should be installed.</li>
+<li>tee and pipes are used</li>
+</ul>
+</dd>
+</dl>
+<p>options.paved.pycheck.sloccount.param</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="paved.pycheck.findimports">
+<tt class="descclassname">paved.pycheck.</tt><tt class="descname">findimports</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/paved/pycheck.html#findimports"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#paved.pycheck.findimports" title="Permalink to this definition">¶</a></dt>
+<dd><p>print python module dependencies by findimports.</p>
+<dl class="docutils">
+<dt>requirements:</dt>
+<dd><ul class="first last simple">
+<li><a class="reference external" href="http://pypi.python.org/pypi/findimports">findimports</a> should be installed. <tt class="docutils literal"><span class="pre">easy_install</span> <span class="pre">findimports</span></tt></li>
+</ul>
+</dd>
+</dl>
+<p>options.paved.pycheck.findimports.param</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="paved.pycheck.pyflakes">
+<tt class="descclassname">paved.pycheck.</tt><tt class="descname">pyflakes</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/paved/pycheck.html#pyflakes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#paved.pycheck.pyflakes" title="Permalink to this definition">¶</a></dt>
+<dd><p>passive check of python programs by pyflakes.</p>
+<dl class="docutils">
+<dt>requirements:</dt>
+<dd><ul class="first last simple">
+<li><a class="reference external" href="http://pypi.python.org/pypi/pyflakes">pyflakes</a> should be installed. <tt class="docutils literal"><span class="pre">easy_install</span> <span class="pre">pyflakes</span></tt></li>
+</ul>
+</dd>
+</dl>
+<p>options.paved.pycheck.pyflakes.param</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="paved.pycheck.pychecker">
+<tt class="descclassname">paved.pycheck.</tt><tt class="descname">pychecker</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/paved/pycheck.html#pychecker"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#paved.pycheck.pychecker" title="Permalink to this definition">¶</a></dt>
+<dd><p>check of python programs by pychecker.</p>
+<dl class="docutils">
+<dt>requirements:</dt>
+<dd><ul class="first last simple">
+<li><a class="reference external" href="http://pychecker.sourceforge.net/">pychecker</a> should be installed.</li>
+</ul>
+</dd>
+</dl>
+<p>options.paved.pycheck.pychecker.param</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="paved.pycheck.nose">
+<tt class="descclassname">paved.pycheck.</tt><tt class="descname">nose</tt><big>(</big><big>)</big><a class="headerlink" href="#paved.pycheck.nose" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run unit tests using nosetests.</p>
+<dl class="docutils">
+<dt>requirements:</dt>
+<dd><ul class="first last simple">
+<li><a class="reference external" href="http://somethingaboutorange.com/mrl/projects/nose/1.0.0/">nose</a> should be installed.</li>
+</ul>
+</dd>
+</dl>
+<p>options.paved.pycheck.nose.param</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="api.paved.util.html"
+                        title="previous chapter">paved.util</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/api.paved.pycheck.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api.paved.util.html" title="paved.util"
+             >previous</a> |</li>
+        <li><a href="index.html">paved v0.2 documentation</a> &raquo;</li>
+          <li><a href="api.html" >API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, David Eyk.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

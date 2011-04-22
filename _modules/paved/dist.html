@@ -1,0 +1,174 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>paved.dist &mdash; paved v0.2 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="paved v0.2 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">paved v0.2 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for paved.dist</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;paved.dist -- distribution tasks</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">urllib</span>
+
+<span class="kn">from</span> <span class="nn">paver.easy</span> <span class="kn">import</span> <span class="n">task</span><span class="p">,</span> <span class="n">needs</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">Bunch</span>
+<span class="kn">from</span> <span class="nn">paver.setuputils</span> <span class="kn">import</span> <span class="n">install_distutils_tasks</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">paved</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">util</span>
+
+<span class="n">install_distutils_tasks</span><span class="p">()</span>
+
+<span class="n">util</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+    <span class="n">options</span><span class="o">.</span><span class="n">paved</span><span class="p">,</span> 
+    <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">dist</span> <span class="o">=</span> <span class="n">Bunch</span><span class="p">(</span>
+            <span class="n">distribute_url</span> <span class="o">=</span> <span class="s">&#39;http://python-distribute.org/distribute_setup.py&#39;</span><span class="p">,</span>
+            <span class="n">manifest</span> <span class="o">=</span> <span class="n">Bunch</span><span class="p">(</span>
+                <span class="n">include</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span>
+                        <span class="s">&quot;distribute_setup.py&quot;</span><span class="p">,</span>
+                        <span class="s">&quot;pavement.py&quot;</span><span class="p">,</span>
+                        <span class="s">&quot;paver-minilib.zip&quot;</span><span class="p">,</span>
+                        <span class="s">&quot;setup.py&quot;</span><span class="p">,</span>
+                        <span class="s">&quot;CHANGES*&quot;</span><span class="p">,</span>
+                        <span class="s">&quot;LICENSE*&quot;</span><span class="p">,</span>
+                        <span class="s">&quot;README*&quot;</span><span class="p">,</span>
+                        <span class="p">]),</span>
+                <span class="n">recursive_include</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([]),</span>
+                <span class="n">prune</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([]),</span>
+                <span class="p">),</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;get_distribute&#39;</span><span class="p">,</span> <span class="s">&#39;sdist&#39;</span><span class="p">,</span> <span class="s">&#39;upload&#39;</span><span class="p">,</span> <span class="s">&#39;manifest&#39;</span><span class="p">]</span>
+
+
+<span class="nd">@task</span>
+<div class="viewcode-block" id="get_distribute"><a class="viewcode-back" href="../../api.paved.dist.html#paved.dist.get_distribute">[docs]</a><span class="k">def</span> <span class="nf">get_distribute</span><span class="p">(</span><span class="n">options</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Retrieve a copy of distribute_setup.py for distribution.</span>
+
+<span class="sd">    `options.paved.dist.distribute_url`: the URL to download the</span>
+<span class="sd">    `distribute_setup.py` file from.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">paved</span><span class="o">.</span><span class="n">dist</span><span class="o">.</span><span class="n">distribute_url</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">paved</span><span class="o">.</span><span class="n">cwd</span> <span class="o">/</span> <span class="s">&#39;distribute_setup.py&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fo</span><span class="p">:</span>
+        <span class="n">fo</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">url</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+
+</div>
+<span class="nd">@task</span>
+<div class="viewcode-block" id="manifest"><a class="viewcode-back" href="../../api.paved.dist.html#paved.dist.manifest">[docs]</a><span class="k">def</span> <span class="nf">manifest</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Guarantee the existence of a basic MANIFEST.in.</span>
+
+<span class="sd">    `options.paved.dist.manifest.include`: set of files (or globs) to include with the `include` directive.</span>
+
+<span class="sd">    `options.paved.dist.manifest.recursive_include`: set of files (or globs) to include with the `recursive-include` directive.</span>
+
+<span class="sd">    `options.paved.dist.manifest.prune`: set of files (or globs) to exclude with the `prune` directive.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">paved</span><span class="o">.</span><span class="n">cwd</span> <span class="o">/</span> <span class="s">&#39;MANIFEST.in&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fo</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">paved</span><span class="o">.</span><span class="n">dist</span><span class="o">.</span><span class="n">manifest</span><span class="o">.</span><span class="n">include</span><span class="p">:</span>
+            <span class="n">fo</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;include </span><span class="si">%s</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">item</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">paved</span><span class="o">.</span><span class="n">dist</span><span class="o">.</span><span class="n">manifest</span><span class="o">.</span><span class="n">recursive_include</span><span class="p">:</span>
+            <span class="n">fo</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;recursive-include </span><span class="si">%s</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">item</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">paved</span><span class="o">.</span><span class="n">dist</span><span class="o">.</span><span class="n">manifest</span><span class="o">.</span><span class="n">prune</span><span class="p">:</span>
+            <span class="n">fo</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;prune </span><span class="si">%s</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">item</span><span class="p">)</span>
+
+</div>
+<span class="nd">@task</span>
+<span class="nd">@needs</span><span class="p">(</span><span class="s">&#39;get_distribute&#39;</span><span class="p">,</span> <span class="s">&#39;generate_setup&#39;</span><span class="p">,</span> <span class="s">&#39;minilib&#39;</span><span class="p">,</span> <span class="s">&#39;manifest&#39;</span><span class="p">,</span> <span class="s">&#39;setuptools.command.sdist&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="sdist"><a class="viewcode-back" href="../../api.paved.dist.html#paved.dist.sdist">[docs]</a><span class="k">def</span> <span class="nf">sdist</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Overrides sdist to make sure that our setup.py is generated.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+
+</div>
+<span class="nd">@task</span>
+<span class="nd">@needs</span><span class="p">(</span><span class="s">&#39;sdist&#39;</span><span class="p">,</span> <span class="s">&#39;setuptools.command.upload&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="upload"><a class="viewcode-back" href="../../api.paved.dist.html#paved.dist.upload">[docs]</a><span class="k">def</span> <span class="nf">upload</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Upload the package to PyPI.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">paved v0.2 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, David Eyk.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

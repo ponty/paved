@@ -1,0 +1,205 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>paved.docs &mdash; paved v0.2 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="paved v0.2 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">paved v0.2 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for paved.docs</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;paved.sphinx -- helpers and tasks for Sphinx documentation.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">paved</span><span class="p">,</span> <span class="n">util</span>
+<span class="kn">from</span> <span class="nn">paver.easy</span> <span class="kn">import</span> <span class="n">task</span><span class="p">,</span> <span class="n">needs</span><span class="p">,</span> <span class="n">sh</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">Bunch</span><span class="p">,</span> <span class="n">BuildFailure</span>
+
+
+<span class="n">util</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+    <span class="n">options</span><span class="o">.</span><span class="n">paved</span><span class="p">,</span>
+    <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">docs</span> <span class="o">=</span> <span class="n">Bunch</span><span class="p">(</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">path</span><span class="p">(</span><span class="s">&#39;./docs&#39;</span><span class="p">),</span>
+            <span class="n">targets</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;html&#39;</span><span class="p">],</span>
+            <span class="n">build_rel</span> <span class="o">=</span> <span class="s">&#39;_build/html&#39;</span><span class="p">,</span>
+            <span class="n">upload_location</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+            <span class="p">),</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;sphinx_make&#39;</span><span class="p">,</span> <span class="s">&#39;docs&#39;</span><span class="p">,</span> <span class="s">&#39;clean_docs&#39;</span><span class="p">,</span> <span class="s">&#39;rsync_docs&#39;</span><span class="p">,</span> <span class="s">&#39;ghpages&#39;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="sphinx_make"><a class="viewcode-back" href="../../api.paved.docs.html#paved.docs.sphinx_make">[docs]</a><span class="k">def</span> <span class="nf">sphinx_make</span><span class="p">(</span><span class="o">*</span><span class="n">targets</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Call the Sphinx Makefile with the specified targets.</span>
+
+<span class="sd">    `options.paved.docs.path`: the path to the Sphinx folder (where the Makefile resides).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">sh</span><span class="p">(</span><span class="s">&#39;make </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">targets</span><span class="p">),</span> <span class="n">cwd</span><span class="o">=</span><span class="n">options</span><span class="o">.</span><span class="n">paved</span><span class="o">.</span><span class="n">docs</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+
+</div>
+<span class="nd">@task</span>
+<div class="viewcode-block" id="docs"><a class="viewcode-back" href="../../api.paved.docs.html#paved.docs.docs">[docs]</a><span class="k">def</span> <span class="nf">docs</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Make Sphinx docs.</span>
+
+<span class="sd">    `options.paved.docs.path`: the path to the Sphinx folder (where the Makefile resides).</span>
+
+<span class="sd">    `options.paved.docs.targets`: the Make targets to send to `sphinx_make`. Default is `html`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">sphinx_make</span><span class="p">(</span><span class="o">*</span><span class="n">options</span><span class="o">.</span><span class="n">paved</span><span class="o">.</span><span class="n">docs</span><span class="o">.</span><span class="n">targets</span><span class="p">)</span>
+
+</div>
+<span class="nd">@task</span>
+<div class="viewcode-block" id="clean_docs"><a class="viewcode-back" href="../../api.paved.docs.html#paved.docs.clean_docs">[docs]</a><span class="k">def</span> <span class="nf">clean_docs</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Clean Sphinx docs.</span>
+
+<span class="sd">    `options.paved.docs.path`: the path to the Sphinx folder (where the Makefile resides).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">sphinx_make</span><span class="p">(</span><span class="s">&#39;clean&#39;</span><span class="p">)</span>
+
+</div>
+<span class="nd">@task</span>
+<span class="nd">@needs</span><span class="p">(</span><span class="s">&#39;docs&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="rsync_docs"><a class="viewcode-back" href="../../api.paved.docs.html#paved.docs.rsync_docs">[docs]</a><span class="k">def</span> <span class="nf">rsync_docs</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Upload the docs to a remote location via rsync.</span>
+
+<span class="sd">    `options.paved.docs.rsync_location`: the target location to rsync files to.</span>
+<span class="sd">    </span>
+<span class="sd">    `options.paved.docs.path`: the path to the Sphinx folder (where the Makefile resides).</span>
+
+<span class="sd">    `options.paved.docs.build_rel`: the path of the documentation</span>
+<span class="sd">        build folder, relative to `options.paved.docs.path`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">options</span><span class="o">.</span><span class="n">paved</span><span class="o">.</span><span class="n">docs</span><span class="o">.</span><span class="n">rsync_location</span><span class="p">,</span> <span class="s">&quot;Please specify an rsync location in options.paved.docs.rsync_location.&quot;</span>
+    <span class="n">sh</span><span class="p">(</span><span class="s">&#39;rsync -ravz </span><span class="si">%s</span><span class="s">/ </span><span class="si">%s</span><span class="s">/&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">path</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">paved</span><span class="o">.</span><span class="n">docs</span><span class="o">.</span><span class="n">path</span><span class="p">)</span> <span class="o">/</span> <span class="n">options</span><span class="o">.</span><span class="n">paved</span><span class="o">.</span><span class="n">docs</span><span class="o">.</span><span class="n">build_rel</span><span class="p">,</span> 
+                                <span class="n">options</span><span class="o">.</span><span class="n">paved</span><span class="o">.</span><span class="n">docs</span><span class="o">.</span><span class="n">rsync_location</span><span class="p">))</span>
+</div>
+<span class="nd">@task</span>
+<div class="viewcode-block" id="ghpages"><a class="viewcode-back" href="../../api.paved.docs.html#paved.docs.ghpages">[docs]</a><span class="k">def</span> <span class="nf">ghpages</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39;Push Sphinx docs to github_ gh-pages branch.</span>
+<span class="sd">    </span>
+<span class="sd">     1. Create file .nojekyll</span>
+<span class="sd">     2. Push the branch to origin/gh-pages </span>
+<span class="sd">        after committing using ghp-import_</span>
+<span class="sd">    </span>
+<span class="sd">    Requirements:</span>
+<span class="sd">     - easy_install ghp-import</span>
+
+<span class="sd">    Options:</span>
+<span class="sd">     - `options.paved.docs.*` is not used</span>
+<span class="sd">     - `options.sphinx.docroot` is used (default=docs)</span>
+<span class="sd">     - `options.sphinx.builddir` is used (default=.build)</span>
+<span class="sd">     </span>
+<span class="sd">    .. warning::</span>
+<span class="sd">        This will DESTROY your gh-pages branch. </span>
+<span class="sd">        If you love it, you&#39;ll want to take backups </span>
+<span class="sd">        before playing with this. This script assumes </span>
+<span class="sd">        that gh-pages is 100% derivative. You should </span>
+<span class="sd">        never edit files in your gh-pages branch by hand </span>
+<span class="sd">        if you&#39;re using this script because you will </span>
+<span class="sd">        lose your work.</span>
+<span class="sd">     </span>
+<span class="sd">    .. _github: https://github.com </span>
+<span class="sd">    .. _ghp-import: https://github.com/davisp/ghp-import </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    
+    <span class="c"># copy from paver</span>
+    <span class="n">opts</span> <span class="o">=</span> <span class="n">options</span>
+    <span class="n">docroot</span> <span class="o">=</span> <span class="n">path</span><span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;docroot&#39;</span><span class="p">,</span> <span class="s">&#39;docs&#39;</span><span class="p">))</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">docroot</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="n">BuildFailure</span><span class="p">(</span><span class="s">&quot;Sphinx documentation root (</span><span class="si">%s</span><span class="s">) does not exist.&quot;</span>
+                           <span class="o">%</span> <span class="n">docroot</span><span class="p">)</span>
+    <span class="n">builddir</span> <span class="o">=</span> <span class="n">docroot</span> <span class="o">/</span> <span class="n">opts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;builddir&quot;</span><span class="p">,</span> <span class="s">&quot;.build&quot;</span><span class="p">)</span>
+    <span class="c"># end of copy</span>
+    
+    <span class="n">builddir</span><span class="o">=</span><span class="n">builddir</span> <span class="o">/</span> <span class="s">&#39;html&#39;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">builddir</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="k">raise</span> <span class="n">BuildFailure</span><span class="p">(</span><span class="s">&quot;Sphinx build directory (</span><span class="si">%s</span><span class="s">) does not exist.&quot;</span>
+                           <span class="o">%</span> <span class="n">builddir</span><span class="p">)</span>
+    
+    <span class="n">nojekyll</span> <span class="o">=</span> <span class="n">path</span><span class="p">(</span><span class="n">builddir</span><span class="p">)</span> <span class="o">/</span> <span class="s">&#39;.nojekyll&#39;</span>
+    <span class="n">nojekyll</span><span class="o">.</span><span class="n">touch</span><span class="p">()</span>
+    
+    <span class="n">sh</span><span class="p">(</span><span class="s">&#39;ghp-import -p </span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">docroot</span><span class="p">,</span> <span class="n">builddir</span><span class="p">))</span>
+    </div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">paved v0.2 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, David Eyk.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

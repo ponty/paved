@@ -1,0 +1,146 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>paved.util &mdash; paved v0.2 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="paved v0.2 documentation" href="index.html" />
+    <link rel="up" title="API" href="api.html" />
+    <link rel="next" title="paved.pycheck" href="api.paved.pycheck.html" />
+    <link rel="prev" title="paved.django" href="api.paved.django.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api.paved.pycheck.html" title="paved.pycheck"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api.paved.django.html" title="paved.django"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">paved v0.2 documentation</a> &raquo;</li>
+          <li><a href="api.html" accesskey="U">API</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-paved.util">
+<span id="paved-util"></span><h1>paved.util<a class="headerlink" href="#module-paved.util" title="Permalink to this headline">¶</a></h1>
+<p>paved.util &#8211; helper functions.</p>
+<dl class="function">
+<dt id="paved.util.rmFilePatterns">
+<tt class="descclassname">paved.util.</tt><tt class="descname">rmFilePatterns</tt><big>(</big><em>*patterns</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/paved/util.html#rmFilePatterns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#paved.util.rmFilePatterns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove all files under the given path with the given patterns.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="paved.util.rmDirPatterns">
+<tt class="descclassname">paved.util.</tt><tt class="descname">rmDirPatterns</tt><big>(</big><em>*patterns</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="_modules/paved/util.html#rmDirPatterns"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#paved.util.rmDirPatterns" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove all directories under the current path with the given patterns.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="paved.util.shv">
+<tt class="descclassname">paved.util.</tt><tt class="descname">shv</tt><big>(</big><em>command</em>, <em>capture=False</em>, <em>ignore_error=False</em>, <em>cwd=None</em><big>)</big><a class="reference internal" href="_modules/paved/util.html#shv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#paved.util.shv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the given command inside the virtual environment, if available:</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="paved.util.update">
+<tt class="descclassname">paved.util.</tt><tt class="descname">update</tt><big>(</big><em>dst</em>, <em>src</em><big>)</big><a class="reference internal" href="_modules/paved/util.html#update"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#paved.util.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recursively update the destination dict-like object with the source dict-like object.</p>
+<p>Useful for merging options and Bunches together!</p>
+<p>Based on:
+<a class="reference external" href="http://code.activestate.com/recipes/499335-recursively-update-a-dictionary-without-hitting-py/#c1">http://code.activestate.com/recipes/499335-recursively-update-a-dictionary-without-hitting-py/#c1</a></p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="api.paved.django.html"
+                        title="previous chapter">paved.django</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="api.paved.pycheck.html"
+                        title="next chapter">paved.pycheck</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/api.paved.util.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api.paved.pycheck.html" title="paved.pycheck"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="api.paved.django.html" title="paved.django"
+             >previous</a> |</li>
+        <li><a href="index.html">paved v0.2 documentation</a> &raquo;</li>
+          <li><a href="api.html" >API</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2010, David Eyk.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>
