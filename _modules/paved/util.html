@@ -3,13 +3,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>paved.util &mdash; paved v0.2 documentation</title>
+    <title>paved.util &mdash; paved 0.2 documentation</title>
+    
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
@@ -22,7 +25,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="paved v0.2 documentation" href="../../index.html" />
+    <link rel="top" title="paved 0.2 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
   <body>
@@ -35,7 +38,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">paved v0.2 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">paved 0.2 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -49,14 +52,14 @@
 <span class="c"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;paved.util -- helper functions.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">paved</span>
-<span class="kn">from</span> <span class="nn">paver.easy</span> <span class="kn">import</span> <span class="n">info</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">dry</span><span class="p">,</span> <span class="n">sh</span><span class="p">,</span> <span class="n">error</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">paver.easy</span> <span class="kn">import</span> <span class="n">info</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">dry</span><span class="p">,</span> <span class="n">sh</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">paved</span>
 
 
-
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;rmFilePatterns&#39;</span><span class="p">,</span> <span class="s">&#39;rmDirPatterns&#39;</span><span class="p">,</span> <span class="s">&#39;shv&#39;</span><span class="p">,</span> <span class="s">&#39;update&#39;</span><span class="p">,</span> <span class="s">&#39;read_project_version&#39;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;rmFilePatterns&#39;</span><span class="p">,</span> <span class="s">&#39;rmDirPatterns&#39;</span><span class="p">,</span> <span class="s">&#39;shv&#39;</span><span class="p">,</span> <span class="s">&#39;update&#39;</span><span class="p">]</span>
 
 
 <span class="k">def</span> <span class="nf">_setVirtualEnv</span><span class="p">():</span>
@@ -120,6 +123,16 @@
     <span class="k">return</span> <span class="n">_walkWithAction</span><span class="p">(</span><span class="o">*</span><span class="n">patterns</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
 </div>
+<span class="k">def</span> <span class="nf">bash</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">capture</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">ignore_error</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> 
+       <span class="n">nice</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="s">&#39;/bin/bash -c &quot;</span><span class="si">%s</span><span class="s">&quot;&#39;</span> <span class="o">%</span> <span class="n">cmd</span>
+    <span class="k">if</span> <span class="n">nice</span><span class="p">:</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="s">&#39;nice </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="n">cmd</span>
+    <span class="k">if</span> <span class="n">stderr</span><span class="p">:</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s"> 2&gt;&amp;1&#39;</span> <span class="o">%</span> <span class="n">cmd</span>
+    <span class="k">return</span> <span class="n">sh</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">capture</span><span class="o">=</span><span class="n">capture</span><span class="p">,</span> <span class="n">ignore_error</span><span class="o">=</span><span class="n">ignore_error</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">)</span>
+
+
 <div class="viewcode-block" id="shv"><a class="viewcode-back" href="../../api.paved.util.html#paved.util.shv">[docs]</a><span class="k">def</span> <span class="nf">shv</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">capture</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">ignore_error</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Run the given command inside the virtual environment, if available:</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -128,7 +141,7 @@
         <span class="n">command</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s</span><span class="s">; </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">virtualenv</span><span class="o">.</span><span class="n">activate_cmd</span><span class="p">,</span> <span class="n">command</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
         <span class="k">pass</span>
-    <span class="k">return</span> <span class="n">sh</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">capture</span><span class="o">=</span><span class="n">capture</span><span class="p">,</span> <span class="n">ignore_error</span><span class="o">=</span><span class="n">ignore_error</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">bash</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">capture</span><span class="o">=</span><span class="n">capture</span><span class="p">,</span> <span class="n">ignore_error</span><span class="o">=</span><span class="n">ignore_error</span><span class="p">,</span> <span class="n">cwd</span><span class="o">=</span><span class="n">cwd</span><span class="p">)</span>
 
 </div>
 <div class="viewcode-block" id="update"><a class="viewcode-back" href="../../api.paved.util.html#paved.util.update">[docs]</a><span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">src</span><span class="p">):</span>
@@ -154,72 +167,7 @@
                     <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">current_dst</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">current_src</span><span class="p">[</span><span class="n">key</span><span class="p">]))</span>
                 <span class="k">else</span><span class="p">:</span>
                     <span class="n">current_dst</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_src</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">dst</span>
-</div>
-<div class="viewcode-block" id="find_project"><a class="viewcode-back" href="../../api.paved.util.html#paved.util.find_project">[docs]</a><span class="k">def</span> <span class="nf">find_project</span><span class="p">(</span><span class="n">exclude_dirs</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;doc&#39;</span><span class="p">,</span> <span class="s">&#39;docs&#39;</span><span class="p">,</span> <span class="s">&#39;test&#39;</span><span class="p">,</span> <span class="s">&#39;tests&#39;</span><span class="p">],</span> <span class="n">exclude_files</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;pavement.py&#39;</span><span class="p">]):</span>
-    <span class="sd">&#39;&#39;&#39;  Try to find project package/module .</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-    <span class="n">d</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
-
-    <span class="c"># go up if cwd is in exclude dir</span>
-    <span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">d</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">exclude_dirs</span><span class="p">:</span>
-            <span class="n">d</span><span class="o">=</span><span class="n">d</span><span class="o">.</span><span class="n">parent</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">break</span>
-    
-    <span class="c"># search for package</span>
-    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">walkdirs</span><span class="p">():</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">files</span><span class="p">(</span><span class="s">&#39;__init__.py&#39;</span><span class="p">)):</span>
-            <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">exclude_dirs</span><span class="p">:</span>
-                <span class="n">py</span> <span class="o">=</span> <span class="n">x</span> 
-                <span class="k">break</span>
-            
-    <span class="c"># search for module</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">py</span><span class="p">:</span>
-        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">files</span><span class="p">(</span><span class="s">&#39;*.py&#39;</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">exclude_files</span><span class="p">:</span>
-                <span class="n">py</span> <span class="o">=</span> <span class="n">x</span> 
-                <span class="k">break</span>
-                            
-    <span class="k">return</span> <span class="n">py</span>
-</div>
-<div class="viewcode-block" id="read_project_version"><a class="viewcode-back" href="../../api.paved.util.html#paved.util.read_project_version">[docs]</a><span class="k">def</span> <span class="nf">read_project_version</span><span class="p">(</span><span class="n">py</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">exclude_dirs</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;doc&#39;</span><span class="p">,</span> <span class="s">&#39;docs&#39;</span><span class="p">,</span> <span class="s">&#39;test&#39;</span><span class="p">,</span> <span class="s">&#39;tests&#39;</span><span class="p">],</span> <span class="n">exclude_files</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;pavement.py&#39;</span><span class="p">]):</span>
-    <span class="sd">&#39;&#39;&#39; read version from module/package without importing.</span>
-<span class="sd">    Try to find package/module if input file is not set.</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-    <span class="k">if</span> <span class="n">py</span><span class="p">:</span>
-        <span class="n">py</span> <span class="o">=</span> <span class="n">path</span><span class="p">(</span><span class="n">py</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">py</span> <span class="o">=</span> <span class="n">find_project</span><span class="p">(</span><span class="n">exclude_dirs</span><span class="p">,</span> <span class="n">exclude_files</span><span class="p">)</span>
-                
-    <span class="k">if</span> <span class="n">py</span><span class="o">.</span><span class="n">isdir</span><span class="p">:</span>
-        <span class="n">py</span> <span class="o">=</span> <span class="n">py</span> <span class="o">/</span> <span class="s">&#39;__init__.py&#39;</span>
-
-    <span class="n">info</span><span class="p">(</span><span class="s">&#39;reading version from &#39;</span><span class="o">+</span><span class="n">py</span><span class="p">)</span>                
-
-    <span class="n">v</span> <span class="o">=</span> <span class="bp">None</span>
-    
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">v</span><span class="p">:</span>    
-        <span class="n">__version__</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">py</span><span class="o">.</span><span class="n">lines</span><span class="p">():</span>
-            <span class="k">if</span> <span class="s">&#39;__version__&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
-                <span class="k">exec</span> <span class="n">line</span>
-                <span class="k">break</span>
-        <span class="n">v</span> <span class="o">=</span> <span class="n">__version__</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">v</span><span class="p">:</span>    
-        <span class="n">VERSION</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">py</span><span class="o">.</span><span class="n">lines</span><span class="p">():</span>
-            <span class="k">if</span> <span class="s">&#39;VERSION&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
-                <span class="k">exec</span> <span class="n">line</span>
-                <span class="k">break</span>
-        <span class="n">v</span> <span class="o">=</span>  <span class="n">VERSION</span>
-        
-    <span class="k">if</span> <span class="n">v</span><span class="p">:</span>
-        <span class="n">info</span><span class="p">(</span><span class="s">&#39;version=&#39;</span> <span class="o">+</span> <span class="n">__version__</span><span class="p">)</span>  
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">error</span><span class="p">(</span><span class="s">&#39;version not found in &#39;</span> <span class="o">+</span> <span class="n">py</span><span class="p">)</span>  
-    <span class="k">return</span> <span class="n">v</span></div>
+    <span class="k">return</span> <span class="n">dst</span></div>
 </pre></div>
 
           </div>
@@ -230,7 +178,7 @@
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -253,13 +201,13 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">paved v0.2 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">paved 0.2 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
         &copy; Copyright 2010, David Eyk.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.
     </div>
   </body>
 </html>

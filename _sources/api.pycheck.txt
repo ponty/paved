@@ -1,5 +1,0 @@
-paved
-=========
-
-.. automodule:: paved.pycheck
-   :members:

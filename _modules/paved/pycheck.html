@@ -3,13 +3,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>paved.pycheck &mdash; paved v0.2 documentation</title>
+    <title>paved.pycheck &mdash; paved 0.2 documentation</title>
+    
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
@@ -22,7 +25,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="paved v0.2 documentation" href="../../index.html" />
+    <link rel="top" title="paved 0.2 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
   <body>
@@ -35,7 +38,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">paved v0.2 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">paved 0.2 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -49,15 +52,40 @@
 <span class="c"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;pycheck -- check python code.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">paver.easy</span> <span class="kn">import</span> <span class="n">options</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="n">sh</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">util</span>
+<span class="kn">from</span> <span class="nn">paver.easy</span> <span class="kn">import</span> <span class="n">options</span><span class="p">,</span> <span class="n">task</span><span class="p">,</span> <span class="n">sh</span><span class="p">,</span> <span class="n">needs</span><span class="p">,</span> <span class="n">path</span>
+<span class="kn">from</span> <span class="nn">paver.options</span> <span class="kn">import</span> <span class="n">Bunch</span>
 
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;sloccount&#39;</span><span class="p">,</span> <span class="s">&#39;findimports&#39;</span><span class="p">,</span><span class="s">&#39;pyflakes&#39;</span><span class="p">,</span> <span class="s">&#39;pychecker&#39;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;pycheckall&#39;</span><span class="p">,</span> <span class="s">&#39;sloccount&#39;</span><span class="p">,</span> <span class="s">&#39;findimports&#39;</span><span class="p">,</span> <span class="s">&#39;pyflakes&#39;</span><span class="p">,</span> <span class="s">&#39;pychecker&#39;</span><span class="p">,</span> <span class="s">&#39;nose&#39;</span><span class="p">]</span>
 
+
+<span class="n">util</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
+    <span class="n">options</span><span class="o">.</span><span class="n">paved</span><span class="p">,</span>
+    <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">pycheck</span><span class="o">=</span><span class="n">Bunch</span><span class="p">(</span>
+            <span class="n">nose</span><span class="o">=</span><span class="n">Bunch</span><span class="p">(</span>
+                         <span class="n">param</span><span class="o">=</span><span class="s">&#39;--with-xunit --verbose&#39;</span><span class="p">,</span>
+                         <span class="p">),</span>
+            <span class="n">sloccount</span><span class="o">=</span><span class="n">Bunch</span><span class="p">(</span>
+                         <span class="n">param</span><span class="o">=</span><span class="s">&#39;--wide --details&#39;</span><span class="p">,</span>
+                         <span class="p">),</span>
+            <span class="n">findimports</span><span class="o">=</span><span class="n">Bunch</span><span class="p">(</span>
+                         <span class="n">param</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span>
+                         <span class="p">),</span>
+            <span class="n">pyflakes</span><span class="o">=</span><span class="n">Bunch</span><span class="p">(</span>
+                         <span class="n">param</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span>
+                         <span class="p">),</span>
+            <span class="n">pychecker</span><span class="o">=</span><span class="n">Bunch</span><span class="p">(</span>
+                         <span class="n">param</span><span class="o">=</span><span class="s">&#39;--stdlib --only --limit 100&#39;</span><span class="p">,</span>
+                         <span class="p">),</span>
+            <span class="p">),</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
 
 <span class="nd">@task</span>
 <div class="viewcode-block" id="sloccount"><a class="viewcode-back" href="../../api.paved.pycheck.html#paved.pycheck.sloccount">[docs]</a><span class="k">def</span> <span class="nf">sloccount</span><span class="p">():</span>
-    <span class="sd">&#39;&#39;&#39;Print &quot;Source Lines of Code&quot; using sloccount_ and writes into file.</span>
+    <span class="sd">&#39;&#39;&#39;Print &quot;Source Lines of Code&quot; and export to file.</span>
 <span class="sd">    </span>
 <span class="sd">    Export is hudson_ plugin_ compatible: sloccount.sc</span>
 <span class="sd">    </span>
@@ -65,48 +93,103 @@
 <span class="sd">     - sloccount_ should be installed.</span>
 <span class="sd">     - tee and pipes are used</span>
 
+<span class="sd">    options.paved.pycheck.sloccount.param</span>
+
 <span class="sd">    .. _sloccount: http://www.dwheeler.com/sloccount/</span>
 <span class="sd">    .. _hudson: http://hudson-ci.org/</span>
 <span class="sd">    .. _plugin: http://wiki.hudson-ci.org/display/HUDSON/SLOCCount+Plugin</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="n">packages</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">setup</span><span class="o">.</span><span class="n">packages</span>
-    <span class="n">sh</span><span class="p">(</span><span class="s">&#39;sloccount --wide --details {files} | tee sloccount.sc&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">files</span><span class="o">=</span><span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">packages</span><span class="p">)))</span>
+
+    <span class="c"># filter out  subpackages</span>
+    <span class="n">setup</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;setup&#39;</span><span class="p">)</span>
+    <span class="n">packages</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;packages&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">setup</span> <span class="k">else</span> <span class="bp">None</span>
+        
+    <span class="k">if</span> <span class="n">packages</span><span class="p">:</span>
+        <span class="n">dirs</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">packages</span> <span class="k">if</span> <span class="s">&#39;.&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">dirs</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;.&#39;</span><span class="p">]</span>
+    
+    <span class="c"># sloccount has strange behaviour with directories, </span>
+    <span class="c"># can cause exception in hudson sloccount plugin.</span>
+    <span class="c"># Better to call it with file list</span>
+    <span class="n">ls</span><span class="o">=</span><span class="p">[]</span>
+    <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dirs</span><span class="p">:</span>
+        <span class="n">ls</span> <span class="o">+=</span> <span class="nb">list</span><span class="p">(</span><span class="n">path</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="o">.</span><span class="n">walkfiles</span><span class="p">())</span>
+    <span class="c">#ls=list(set(ls))</span>
+    <span class="n">files</span><span class="o">=</span><span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ls</span><span class="p">)</span>
+    <span class="n">param</span><span class="o">=</span><span class="n">options</span><span class="o">.</span><span class="n">paved</span><span class="o">.</span><span class="n">pycheck</span><span class="o">.</span><span class="n">sloccount</span><span class="o">.</span><span class="n">param</span>
+    <span class="n">sh</span><span class="p">(</span><span class="s">&#39;sloccount {param} {files} | tee sloccount.sc&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">param</span><span class="o">=</span><span class="n">param</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="n">files</span><span class="p">))</span>
 </div>
 <span class="nd">@task</span>
 <div class="viewcode-block" id="findimports"><a class="viewcode-back" href="../../api.paved.pycheck.html#paved.pycheck.findimports">[docs]</a><span class="k">def</span> <span class="nf">findimports</span><span class="p">():</span>
-    <span class="sd">&#39;&#39;&#39;print python module dependencies by findimports_.</span>
+    <span class="sd">&#39;&#39;&#39;print python module dependencies by findimports.</span>
 <span class="sd">       </span>
 <span class="sd">    requirements:</span>
 <span class="sd">     - findimports_ should be installed. ``easy_install findimports``</span>
 
+<span class="sd">    options.paved.pycheck.findimports.param</span>
+
 <span class="sd">    .. _findimports: http://pypi.python.org/pypi/findimports</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="n">sh</span><span class="p">(</span><span class="s">&#39;findimports {files} &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">files</span><span class="o">=</span><span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">sources</span><span class="p">)))</span>
+
+    <span class="c"># filter out  subpackages</span>
+    <span class="n">packages</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">setup</span><span class="o">.</span><span class="n">packages</span> <span class="k">if</span> <span class="s">&#39;.&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+
+    <span class="n">sh</span><span class="p">(</span><span class="s">&#39;findimports {param} {files} &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">param</span><span class="o">=</span><span class="n">options</span><span class="o">.</span><span class="n">paved</span><span class="o">.</span><span class="n">pycheck</span><span class="o">.</span><span class="n">findimports</span><span class="o">.</span><span class="n">param</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">packages</span><span class="p">)))</span>
 </div>
 <span class="nd">@task</span>
 <div class="viewcode-block" id="pyflakes"><a class="viewcode-back" href="../../api.paved.pycheck.html#paved.pycheck.pyflakes">[docs]</a><span class="k">def</span> <span class="nf">pyflakes</span><span class="p">():</span>
-    <span class="sd">&#39;&#39;&#39;passive check of python programs by pyflakes_.</span>
+    <span class="sd">&#39;&#39;&#39;passive check of python programs by pyflakes.</span>
 <span class="sd">       </span>
 <span class="sd">    requirements:</span>
 <span class="sd">     - pyflakes_ should be installed. ``easy_install pyflakes``</span>
 
+<span class="sd">    options.paved.pycheck.pyflakes.param</span>
+
 <span class="sd">    .. _pyflakes: http://pypi.python.org/pypi/pyflakes</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="n">packages</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">setup</span><span class="o">.</span><span class="n">packages</span>
-    <span class="n">sh</span><span class="p">(</span><span class="s">&#39;pyflakes {files}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">files</span><span class="o">=</span><span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">packages</span><span class="p">)))</span>
+
+    <span class="c"># filter out  subpackages</span>
+    <span class="n">packages</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">setup</span><span class="o">.</span><span class="n">packages</span> <span class="k">if</span> <span class="s">&#39;.&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+
+    <span class="n">sh</span><span class="p">(</span><span class="s">&#39;pyflakes {param} {files}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">param</span><span class="o">=</span><span class="n">options</span><span class="o">.</span><span class="n">paved</span><span class="o">.</span><span class="n">pycheck</span><span class="o">.</span><span class="n">pyflakes</span><span class="o">.</span><span class="n">param</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">packages</span><span class="p">)))</span>
 </div>
 <span class="nd">@task</span>
 <div class="viewcode-block" id="pychecker"><a class="viewcode-back" href="../../api.paved.pycheck.html#paved.pycheck.pychecker">[docs]</a><span class="k">def</span> <span class="nf">pychecker</span><span class="p">():</span>
-    <span class="sd">&#39;&#39;&#39;check of python programs by pychecker_.</span>
+    <span class="sd">&#39;&#39;&#39;check of python programs by pychecker.</span>
 <span class="sd">       </span>
 <span class="sd">    requirements:</span>
 <span class="sd">     - pychecker_ should be installed.</span>
 
+<span class="sd">    options.paved.pycheck.pychecker.param</span>
+
 <span class="sd">    .. _pychecker: http://pychecker.sourceforge.net/</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="n">packages</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">setup</span><span class="o">.</span><span class="n">packages</span>
-    <span class="n">sh</span><span class="p">(</span><span class="s">&#39;pychecker --stdlib --only --limit 100 {files}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">files</span><span class="o">=</span><span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">packages</span><span class="p">)))</span>
-</pre></div></div>
+
+    <span class="c"># filter out  subpackages</span>
+    <span class="n">packages</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">setup</span><span class="o">.</span><span class="n">packages</span> <span class="k">if</span> <span class="s">&#39;.&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+
+    <span class="n">sh</span><span class="p">(</span><span class="s">&#39;pychecker  {param} {files}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">param</span><span class="o">=</span><span class="n">options</span><span class="o">.</span><span class="n">paved</span><span class="o">.</span><span class="n">pycheck</span><span class="o">.</span><span class="n">pychecker</span><span class="o">.</span><span class="n">param</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">packages</span><span class="p">)))</span>
+</div>
+<span class="nd">@task</span>
+<div class="viewcode-block" id="nose"><a class="viewcode-back" href="../../api.paved.pycheck.html#paved.pycheck.nose">[docs]</a><span class="k">def</span> <span class="nf">nose</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39;Run unit tests using nosetests.</span>
+<span class="sd">       </span>
+<span class="sd">    requirements:</span>
+<span class="sd">     - nose_ should be installed.</span>
+
+<span class="sd">    options.paved.pycheck.nose.param</span>
+<span class="sd">    </span>
+<span class="sd">    .. _nose: http://somethingaboutorange.com/mrl/projects/nose/1.0.0/</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">sh</span><span class="p">(</span><span class="s">&#39;nosetests {param}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">param</span><span class="o">=</span><span class="n">options</span><span class="o">.</span><span class="n">paved</span><span class="o">.</span><span class="n">pycheck</span><span class="o">.</span><span class="n">nose</span><span class="o">.</span><span class="n">param</span><span class="p">))</span>
+</div>
+<span class="nd">@task</span>
+<span class="nd">@needs</span><span class="p">(</span><span class="s">&#39;sloccount&#39;</span><span class="p">,</span> <span class="s">&#39;pychecker&#39;</span><span class="p">,</span> <span class="s">&#39;pyflakes&#39;</span><span class="p">,</span> <span class="s">&#39;findimports&#39;</span><span class="p">,</span> <span class="s">&#39;nose&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="pycheckall"><a class="viewcode-back" href="../../api.paved.pycheck.html#paved.pycheck.pycheckall">[docs]</a><span class="k">def</span> <span class="nf">pycheckall</span><span class="p">():</span>
+    <span class="sd">&#39;&#39;&#39;All pycheck tasks.</span>
+<span class="sd">    &#39;&#39;&#39;</span></div>
+</pre></div>
 
           </div>
         </div>
@@ -116,7 +199,7 @@
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -139,13 +222,13 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">paved v0.2 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">paved 0.2 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
         &copy; Copyright 2010, David Eyk.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.
     </div>
   </body>
 </html>

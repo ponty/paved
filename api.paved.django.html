@@ -3,13 +3,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>paved.django &mdash; paved v0.2 documentation</title>
+    <title>paved.django &mdash; paved 0.2 documentation</title>
+    
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
@@ -22,7 +25,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="paved v0.2 documentation" href="index.html" />
+    <link rel="top" title="paved 0.2 documentation" href="index.html" />
     <link rel="up" title="API" href="api.html" />
     <link rel="next" title="paved.util" href="api.paved.util.html" />
     <link rel="prev" title="paved.docs" href="api.paved.docs.html" /> 
@@ -43,7 +46,7 @@
         <li class="right" >
           <a href="api.paved.docs.html" title="paved.docs"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">paved v0.2 documentation</a> &raquo;</li>
+        <li><a href="index.html">paved 0.2 documentation</a> &raquo;</li>
           <li><a href="api.html" accesskey="U">API</a> &raquo;</li> 
       </ul>
     </div>  
@@ -53,9 +56,9 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="paved-django">
-<h1>paved.django<a class="headerlink" href="#paved-django" title="Permalink to this headline">¶</a></h1>
-<span class="target" id="module-paved.django"></span><p>paved.django &#8211; common tasks for django projects.</p>
+  <div class="section" id="module-paved.django">
+<span id="paved-django"></span><h1>paved.django<a class="headerlink" href="#module-paved.django" title="Permalink to this headline">¶</a></h1>
+<p>paved.django &#8211; common tasks for django projects.</p>
 <dl class="function">
 <dt id="paved.django.manage">
 <tt class="descclassname">paved.django.</tt><tt class="descname">manage</tt><big>(</big><em>args</em><big>)</big><a class="reference internal" href="_modules/paved/django.html#manage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#paved.django.manage" title="Permalink to this definition">¶</a></dt>
@@ -70,7 +73,7 @@
 
 <dl class="function">
 <dt id="paved.django.call_manage">
-<tt class="descclassname">paved.django.</tt><tt class="descname">call_manage</tt><big>(</big><em>cmd</em><big>)</big><a class="reference internal" href="_modules/paved/django.html#call_manage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#paved.django.call_manage" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">paved.django.</tt><tt class="descname">call_manage</tt><big>(</big><em>cmd</em>, <em>capture=False</em>, <em>ignore_error=False</em><big>)</big><a class="reference internal" href="_modules/paved/django.html#call_manage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#paved.django.call_manage" title="Permalink to this definition">¶</a></dt>
 <dd><p>Utility function to run commands against Django&#8217;s <cite>django-admin.py</cite>/<cite>manage.py</cite>.</p>
 <dl class="docutils">
 <dt><cite>options.paved.django.project</cite>: the path to the django project</dt>
@@ -78,6 +81,12 @@
 <dt><cite>options.paved.django.manage_py</cite>: the path where the django</dt>
 <dd>project&#8217;s <cite>manage.py</cite> resides.</dd>
 </dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="paved.django.djtest">
+<tt class="descclassname">paved.django.</tt><tt class="descname">djtest</tt><big>(</big><em>args</em><big>)</big><a class="reference internal" href="_modules/paved/django.html#djtest"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#paved.django.djtest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run tests. Shorthand for <cite>paver manage test</cite>.</p>
 </dd></dl>
 
 <dl class="function">
@@ -124,7 +133,7 @@ available, to provide <cite>runserver_plus</cite>.</p>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -153,13 +162,13 @@ available, to provide <cite>runserver_plus</cite>.</p>
         <li class="right" >
           <a href="api.paved.docs.html" title="paved.docs"
              >previous</a> |</li>
-        <li><a href="index.html">paved v0.2 documentation</a> &raquo;</li>
+        <li><a href="index.html">paved 0.2 documentation</a> &raquo;</li>
           <li><a href="api.html" >API</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
         &copy; Copyright 2010, David Eyk.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.
     </div>
   </body>
 </html>

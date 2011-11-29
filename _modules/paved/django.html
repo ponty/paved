@@ -3,13 +3,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>paved.django &mdash; paved v0.2 documentation</title>
+    <title>paved.django &mdash; paved 0.2 documentation</title>
+    
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
@@ -22,7 +25,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="paved v0.2 documentation" href="../../index.html" />
+    <link rel="top" title="paved 0.2 documentation" href="../../index.html" />
     <link rel="up" title="Module code" href="../index.html" /> 
   </head>
   <body>
@@ -35,7 +38,7 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">paved v0.2 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">paved 0.2 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
       </ul>
     </div>  
@@ -62,6 +65,7 @@
             <span class="n">manage_py</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
             <span class="n">project</span> <span class="o">=</span> <span class="bp">None</span><span class="p">,</span>
             <span class="n">settings</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="p">,</span>
+            <span class="n">runserver_port</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="p">,</span>
             <span class="n">syncdb</span> <span class="o">=</span> <span class="n">Bunch</span><span class="p">(</span>
                 <span class="n">fixtures</span> <span class="o">=</span> <span class="p">[],</span>
                 <span class="p">),</span>
@@ -72,7 +76,7 @@
         <span class="p">)</span>
     <span class="p">)</span>
 
-<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;manage&#39;</span><span class="p">,</span> <span class="s">&#39;call_manage&#39;</span><span class="p">,</span> <span class="s">&#39;test&#39;</span><span class="p">,</span> <span class="s">&#39;syncdb&#39;</span><span class="p">,</span> <span class="s">&#39;shell&#39;</span><span class="p">,</span> <span class="s">&#39;start&#39;</span><span class="p">]</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;manage&#39;</span><span class="p">,</span> <span class="s">&#39;call_manage&#39;</span><span class="p">,</span> <span class="s">&#39;djtest&#39;</span><span class="p">,</span> <span class="s">&#39;syncdb&#39;</span><span class="p">,</span> <span class="s">&#39;shell&#39;</span><span class="p">,</span> <span class="s">&#39;start&#39;</span><span class="p">]</span>
 
 
 <span class="nd">@task</span>
@@ -90,7 +94,7 @@
     <span class="n">call_manage</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
 
 </div>
-<div class="viewcode-block" id="call_manage"><a class="viewcode-back" href="../../api.paved.django.html#paved.django.call_manage">[docs]</a><span class="k">def</span> <span class="nf">call_manage</span><span class="p">(</span><span class="n">cmd</span><span class="p">):</span>
+<div class="viewcode-block" id="call_manage"><a class="viewcode-back" href="../../api.paved.django.html#paved.django.call_manage">[docs]</a><span class="k">def</span> <span class="nf">call_manage</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">capture</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">ignore_error</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Utility function to run commands against Django&#39;s `django-admin.py`/`manage.py`.</span>
 
 <span class="sd">    `options.paved.django.project`: the path to the django project</span>
@@ -108,12 +112,12 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">manage_py</span> <span class="o">=</span> <span class="n">path</span><span class="p">(</span><span class="n">manage_py</span><span class="p">)</span>
         <span class="n">manage_py</span> <span class="o">=</span> <span class="s">&#39;cd {manage_py.parent}; python ./{manage_py.name}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
-    <span class="n">util</span><span class="o">.</span><span class="n">shv</span><span class="p">(</span><span class="s">&#39;{manage_py} {cmd} --settings={settings}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">()))</span>
+    <span class="k">return</span> <span class="n">util</span><span class="o">.</span><span class="n">shv</span><span class="p">(</span><span class="s">&#39;{manage_py} {cmd} --settings={settings}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">()),</span> <span class="n">capture</span><span class="o">=</span><span class="n">capture</span><span class="p">,</span> <span class="n">ignore_error</span><span class="o">=</span><span class="n">ignore_error</span><span class="p">)</span>
 
 </div>
 <span class="nd">@task</span>
 <span class="nd">@consume_args</span>
-<span class="k">def</span> <span class="nf">djtest</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+<div class="viewcode-block" id="djtest"><a class="viewcode-back" href="../../api.paved.django.html#paved.django.djtest">[docs]</a><span class="k">def</span> <span class="nf">djtest</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Run tests. Shorthand for `paver manage test`.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">paved</span><span class="o">.</span><span class="n">django</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">settings</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
@@ -121,7 +125,7 @@
     <span class="n">cmd</span> <span class="o">=</span> <span class="n">args</span> <span class="ow">and</span> <span class="s">&#39;test </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="s">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">args</span><span class="p">)</span> <span class="ow">or</span> <span class="s">&#39;test&#39;</span>
     <span class="n">call_manage</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
 
-
+</div>
 <span class="nd">@task</span>
 <span class="nd">@consume_args</span>
 <div class="viewcode-block" id="syncdb"><a class="viewcode-back" href="../../api.paved.django.html#paved.django.syncdb">[docs]</a><span class="k">def</span> <span class="nf">syncdb</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
@@ -160,12 +164,15 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">cmd</span> <span class="o">=</span> <span class="s">&#39;runserver&#39;</span>
 
-    <span class="n">settings</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">options</span><span class="o">.</span><span class="n">paved</span><span class="o">.</span><span class="n">django</span><span class="o">.</span><span class="n">settings</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="kn">import</span> <span class="nn">django_extensions</span>
         <span class="n">cmd</span> <span class="o">=</span> <span class="s">&#39;runserver_plus&#39;</span>
     <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
         <span class="n">info</span><span class="p">(</span><span class="s">&quot;Could not import django_extensions. Using default runserver.&quot;</span><span class="p">)</span>
+
+    <span class="n">port</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">paved</span><span class="o">.</span><span class="n">django</span><span class="o">.</span><span class="n">runserver_port</span>
+    <span class="k">if</span> <span class="n">port</span><span class="p">:</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="s">&#39;</span><span class="si">%s</span><span class="s"> </span><span class="si">%s</span><span class="s">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">port</span><span class="p">)</span>
 
     <span class="n">call_manage</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
 
@@ -204,7 +211,7 @@
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -227,13 +234,13 @@
         <li class="right" >
           <a href="../../py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
-        <li><a href="../../index.html">paved v0.2 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">paved 0.2 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Module code</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
         &copy; Copyright 2010, David Eyk.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.
     </div>
   </body>
 </html>
