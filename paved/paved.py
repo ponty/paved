@@ -9,12 +9,12 @@ __cwd__ = path('.').abspath()
 
 
 options(
-    paved=Bunch(
-        cwd=__cwd__,
+    paved = Bunch(
+        cwd = __cwd__,
         
-        clean=Bunch(
-            patterns=["*.pyc", "*~", "*.pyo", "*#", ".#*", "*.lock", "*.log*", "*.orig"],
-            dirs=[__cwd__]
+        clean = Bunch(
+            patterns = ["*.pyc", "*~", "*.pyo", "*#", ".#*", "*.lock", "*.log*", "*.orig"],
+            dirs = [__cwd__]
             ),
         ),
     )
