@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 """paved.pkg -- packaging tools for paved.
 """
-from paver.easy import sh, task, consume_args, path, needs
+from paver.easy import sh, task, consume_args, options, Bunch, path, needs
 import tempfile
 import textwrap
 
 from . import paved
+from . import util
+
 
 try:
     import virtualenv
@@ -19,18 +21,17 @@ __all__ = ['pip_install', 'easy_install','pypi','pypi_pip','pypi_easy_install']
 
 @task
 @consume_args
-def pip_install(*args):
+def pip_install(args):
     """Send the given arguments to `pip install`.
     """
-    sh('pip install %s' % (' '.join(args)))
+    util.pip_install(*args)
 
 
 @task
-@consume_args
-def easy_install(*args):
+def easy_install(args):
     """Send the given arguments to `easy_install`.
     """
-    sh('easy_install %s' % (' '.join(args)))
+    util.easy_install(*args)
 
 if has_virtualenv:
     def install_test(installer, name):
