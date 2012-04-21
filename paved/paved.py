@@ -14,7 +14,8 @@ options(
         
         clean = Bunch(
             patterns = ["*.pyc", "*~", "*.pyo", "*#", ".#*", "*.lock", "*.log*", "*.orig"],
-            dirs = [__cwd__]
+            dirs = [__cwd__],
+            rmdirs = [],
             ),
         ),
     )
@@ -27,9 +28,14 @@ __all__ = ['clean', 'printoptions']
 def clean(options, info):
     """Clean up extra files littering the source tree.
 
+    options.paved.clean.rmdirs: directories to remove
     options.paved.clean.dirs: directories to search recursively
     options.paved.clean.patterns: patterns to search for and remove
     """
+    info("Removing directories %s", options.paved.clean.rmdirs)
+    for rmdir in options.paved.clean.rmdirs:
+#        info("Removing %s", rmdir)
+        path(rmdir).rmtree()
     info("Cleaning patterns %s", options.paved.clean.patterns)
     for wd in options.paved.clean.dirs:
         info("Cleaning in %s", wd)
