@@ -27,3 +27,7 @@ pip-log.txt
 setup.py
 /dist
 /docs/_build
+
+.*
+!.gitignore
+MANIFEST.in
