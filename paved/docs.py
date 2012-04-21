@@ -3,7 +3,7 @@
 """
 from . import paved, util
 from paver.easy import task, needs, sh, path, options, Bunch, BuildFailure
-
+import sys
 
 util.update(
     options.paved,
@@ -17,7 +17,7 @@ util.update(
         )
     )
 
-__all__ = ['sphinx_make', 'docs', 'clean_docs', 'rsync_docs', 'ghpages', 'showhtml']
+__all__ = ['sphinx_make', 'docs', 'clean_docs', 'rsync_docs', 'ghpages', 'showhtml', 'showpdf']
 
 
 def sphinx_make(*targets):
@@ -135,4 +135,42 @@ def showhtml():
                            % builddir)
 
     webbrowser.open(builddir / 'index.html')
-        
+    
+@task
+def showpdf(options, info):
+    """Display the generated pdf documentation.
+    """
+
+    # copy from paver
+    opts = options
+    docroot = path(opts.get('docroot', 'docs'))
+    if not docroot.exists():
+        raise BuildFailure("Sphinx documentation root (%s) does not exist."
+                           % docroot)
+    builddir = docroot / opts.get("builddir", ".build")
+    # end of copy
+    
+    builddir=builddir / 'latex' # TODO: read config 
+    if not builddir.exists():
+        raise BuildFailure("Sphinx build directory (%s) does not exist."
+                           % builddir)
+
+    pdf_list = builddir.files('*.pdf')
+    if not len(pdf_list):
+        raise BuildFailure("Sphinx build directory (%s) has no pdf files."
+                           % builddir)
+
+    # TODO: how to choose the correct pdf file?
+    pdf = sorted(pdf_list)[0] # choose shortest 
+    
+    info('opening %s' % pdf)
+    if sys.platform == "win32":
+        # TODO: test 
+        sh('start "%s"' % pdf)  
+    elif sys.platform == "darwin":
+        # TODO: test 
+        sh('open "%s"' % pdf)  
+    elif sys.platform == "linux2":
+        sh('xdg-open "%s"' % pdf)  
+    
+            
