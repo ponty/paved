@@ -16,7 +16,9 @@ except ImportError:
     has_virtualenv = False
 
 
-__all__ = ['pip_install', 'easy_install','pypi','pypi_pip','pypi_easy_install']
+__all__ = ['pip_install', 'easy_install']
+if has_virtualenv:
+    __all__ += ['pypi','pypi_pip','pypi_easy_install']
 
 
 @task
