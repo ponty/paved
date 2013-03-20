@@ -6,7 +6,8 @@ from paver.easy import options, task, sh, needs, path
 from paver.options import Bunch
 
 
-__all__ = ['pycheckall', 'sloccount', 'findimports', 'pyflakes', 'pychecker', 'nose', 'tox']
+__all__ = ['pycheckall', 'sloccount', 'findimports',
+           'pyflakes', 'pychecker', 'nose', 'tox']
 
 
 util.update(
@@ -14,30 +15,31 @@ util.update(
     dict(
         pycheck=Bunch(
             nose=Bunch(
-                         param='--with-xunit --verbose',
-                         ),
-            sloccount=Bunch(
-                         param='--wide --details',
-                         ),
-            findimports=Bunch(
-                         param='',
-                         ),
-            pyflakes=Bunch(
-                         param='',
-                         ),
-            pychecker=Bunch(
-                         param='--stdlib --only --limit 100',
-                         ),
+                param='--with-xunit --verbose',
             ),
-        )
+            sloccount=Bunch(
+                param='--wide --details',
+            ),
+            findimports=Bunch(
+                param='',
+            ),
+            pyflakes=Bunch(
+                param='',
+            ),
+            pychecker=Bunch(
+                param='--stdlib --only --limit 100',
+            ),
+        ),
     )
+)
+
 
 @task
 def sloccount():
     '''Print "Source Lines of Code" and export to file.
-    
+
     Export is hudson_ plugin_ compatible: sloccount.sc
-    
+
     requirements:
      - sloccount_ should be installed.
      - tee and pipes are used
@@ -52,27 +54,29 @@ def sloccount():
     # filter out  subpackages
     setup = options.get('setup')
     packages = options.get('packages') if setup else None
-        
+
     if packages:
         dirs = [x for x in packages if '.' not in x]
     else:
         dirs = ['.']
-    
-    # sloccount has strange behaviour with directories, 
+
+    # sloccount has strange behaviour with directories,
     # can cause exception in hudson sloccount plugin.
     # Better to call it with file list
-    ls=[]
+    ls = []
     for d in dirs:
         ls += list(path(d).walkfiles())
-    #ls=list(set(ls))
-    files=' '.join(ls)
-    param=options.paved.pycheck.sloccount.param
-    sh('sloccount {param} {files} | tee sloccount.sc'.format(param=param, files=files))
+    # ls=list(set(ls))
+    files = ' '.join(ls)
+    param = options.paved.pycheck.sloccount.param
+    sh('sloccount {param} {files} | tee sloccount.sc'.format(
+        param=param, files=files))
+
 
 @task
 def findimports():
     '''print python module dependencies by findimports.
-       
+
     requirements:
      - findimports_ should be installed. ``easy_install findimports``
 
@@ -84,12 +88,14 @@ def findimports():
     # filter out  subpackages
     packages = [x for x in options.setup.packages if '.' not in x]
 
-    sh('findimports {param} {files} '.format(param=options.paved.pycheck.findimports.param, files=' '.join(packages)))
+    sh('findimports {param} {files} '.format(
+        param=options.paved.pycheck.findimports.param, files=' '.join(packages)))
+
 
 @task
 def pyflakes():
     '''passive check of python programs by pyflakes.
-       
+
     requirements:
      - pyflakes_ should be installed. ``easy_install pyflakes``
 
@@ -101,12 +107,14 @@ def pyflakes():
     # filter out  subpackages
     packages = [x for x in options.setup.packages if '.' not in x]
 
-    sh('pyflakes {param} {files}'.format(param=options.paved.pycheck.pyflakes.param, files=' '.join(packages)))
+    sh('pyflakes {param} {files}'.format(
+        param=options.paved.pycheck.pyflakes.param, files=' '.join(packages)))
+
 
 @task
 def pychecker():
     '''check of python programs by pychecker.
-       
+
     requirements:
      - pychecker_ should be installed.
 
@@ -118,30 +126,33 @@ def pychecker():
     # filter out  subpackages
     packages = [x for x in options.setup.packages if '.' not in x]
 
-    sh('pychecker  {param} {files}'.format(param=options.paved.pycheck.pychecker.param, files=' '.join(packages)))
+    sh('pychecker  {param} {files}'.format(
+        param=options.paved.pycheck.pychecker.param, files=' '.join(packages)))
+
 
 @task
 def nose():
     '''Run unit tests using nosetests.
-       
+
     requirements:
      - nose_ should be installed.
 
     options.paved.pycheck.nose.param
-    
+
     .. _nose: http://somethingaboutorange.com/mrl/projects/nose
     '''
     sh('nosetests {param}'.format(param=options.paved.pycheck.nose.param))
 
+
 @task
 def tox():
     '''Run tox.
-       
+
     requirements:
      - tox_ should be installed.
 
     options.paved.pycheck.nose.param
-    
+
     .. _tox: http://codespeak.net/tox/
     '''
     sh('tox')
