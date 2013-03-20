@@ -182,3 +182,33 @@ def showpdf(options, info):
     elif sys.platform == "linux2":
         sh('xdg-open "%s"' % pdf)
 
+@task
+def pdf():
+    """Build PDF documentation using Sphinx. This uses the following
+    options in a "sphinx" section of the options.
+
+    docroot
+      the root under which Sphinx will be working. Default: docs
+    builddir
+      directory under the docroot where the resulting files are put.
+      default: build
+    sourcedir
+      directory under the docroot for the source files
+      default: (empty string)
+      
+    Code is based on paver.doctools.html
+    """
+    if not has_sphinx:
+        raise BuildFailure('install sphinx to build html docs')
+    options.order('sphinx', add_rest=True)
+    paths = paver.doctools._get_paths()
+    pdfdir = pdfdir_path()
+    sphinxopts = ['', '-b', 'latex', '-d', paths.doctrees,
+        paths.srcdir, pdfdir]
+    dry("sphinx-build %s" % (" ".join(sphinxopts),), sphinx.main, sphinxopts)
+    sh('make', cwd=pdfdir)
+
+    # copy pdf into html directory
+    paths.htmldir.makedirs_p()
+    find_pdf_file().copy(paths.htmldir)
+
