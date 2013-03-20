@@ -2,8 +2,15 @@
 """paved.sphinx -- helpers and tasks for Sphinx documentation.
 """
 from . import paved, util
-from paver.easy import task, needs, sh, path, options, Bunch, BuildFailure
+from paver.easy import task, needs, sh, path, options, Bunch, BuildFailure, dry
+import paver.doctools
 import sys
+
+try:
+    import sphinx
+    has_sphinx = True
+except ImportError:
+    has_sphinx = False
 
 util.update(
     options.paved,
@@ -17,7 +24,7 @@ util.update(
         )
     )
 
-__all__ = ['sphinx_make', 'docs', 'clean_docs', 'rsync_docs', 'ghpages', 'showhtml', 'showpdf']
+__all__ = ['sphinx_make', 'docs', 'clean_docs', 'rsync_docs', 'ghpages', 'showhtml', 'showpdf','pdf']
 
 
 def sphinx_make(*targets):
@@ -135,42 +142,43 @@ def showhtml():
                            % builddir)
 
     webbrowser.open(builddir / 'index.html')
-    
+
+
+def pdfdir_path():
+    paths = paver.doctools._get_paths()
+    return paths.builddir / 'latex'
+
+
+def find_pdf_file():
+    pdf_list = list(pdfdir_path().walkfiles('*.pdf'))
+    if not len(pdf_list):
+        return
+    # TODO: how to choose the correct pdf file?
+    pdf_file = sorted(pdf_list)[0]  # choose shortest
+    return pdf_file
+
+
 @task
 def showpdf(options, info):
     """Display the generated pdf documentation.
     """
 
-    # copy from paver
-    opts = options
-    docroot = path(opts.get('docroot', 'docs'))
-    if not docroot.exists():
-        raise BuildFailure("Sphinx documentation root (%s) does not exist."
-                           % docroot)
-    builddir = docroot / opts.get("builddir", ".build")
-    # end of copy
-    
-    builddir=builddir / 'latex' # TODO: read config 
-    if not builddir.exists():
-        raise BuildFailure("Sphinx build directory (%s) does not exist."
-                           % builddir)
+    pdfdir = pdfdir_path()
+    if not pdfdir.exists():
+        raise BuildFailure("Sphinx PDF build directory (%s) does not exist."
+                           % pdfdir)
 
-    pdf_list = builddir.files('*.pdf')
-    if not len(pdf_list):
-        raise BuildFailure("Sphinx build directory (%s) has no pdf files."
-                           % builddir)
-
-    # TODO: how to choose the correct pdf file?
-    pdf = sorted(pdf_list)[0] # choose shortest 
-    
+    pdf = find_pdf_file()
+    if not pdf:
+        raise BuildFailure("Sphinx PDF build directory (%s) has no pdf files."
+                           % pdfdir)
     info('opening %s' % pdf)
     if sys.platform == "win32":
-        # TODO: test 
-        sh('start "%s"' % pdf)  
+        # TODO: test
+        sh('start "%s"' % pdf)
     elif sys.platform == "darwin":
-        # TODO: test 
-        sh('open "%s"' % pdf)  
+        # TODO: test
+        sh('open "%s"' % pdf)
     elif sys.platform == "linux2":
-        sh('xdg-open "%s"' % pdf)  
-    
-            
+        sh('xdg-open "%s"' % pdf)
+
