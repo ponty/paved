@@ -129,7 +129,7 @@ def nose():
 
     options.paved.pycheck.nose.param
     
-    .. _nose: http://somethingaboutorange.com/mrl/projects/nose/1.0.0/
+    .. _nose: http://somethingaboutorange.com/mrl/projects/nose
     '''
     sh('nosetests {param}'.format(param=options.paved.pycheck.nose.param))
 
