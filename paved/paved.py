@@ -14,8 +14,12 @@ options(
         
         clean = Bunch(
             patterns = ["*.pyc", "*~", "*.pyo", "*#", ".#*", "*.lock", "*.log*", "*.orig"],
+            dirpatterns = ['__pycache__', # python3 .pyc files 
+                           ],
             dirs = [__cwd__],
-            rmdirs = [],
+            rmdirs = [
+                           '.tox', # default tox build directory
+                      ],
             ),
         ),
     )
@@ -30,18 +34,25 @@ def clean(options, info):
 
     options.paved.clean.rmdirs: directories to remove
     options.paved.clean.dirs: directories to search recursively
-    options.paved.clean.patterns: patterns to search for and remove
+    options.paved.clean.patterns: file patterns to search for and remove in 'dirs'
+    options.paved.clean.dirpatterns: directory patterns to search for and remove in 'dirs'
     """
     info("Removing directories %s", options.paved.clean.rmdirs)
-    for rmdir in options.paved.clean.rmdirs:
-#        info("Removing %s", rmdir)
-        path(rmdir).rmtree()
+    for rmdir in set(options.paved.clean.rmdirs):
+        path(rmdir).rmtree_p()
     info("Cleaning patterns %s", options.paved.clean.patterns)
     for wd in options.paved.clean.dirs:
-        info("Cleaning in %s", wd)
+        info("Cleaning recursively in %s", wd)
         for p in options.paved.clean.patterns:
             for f in wd.walkfiles(p):
                 f.remove()
+    info("Cleaning directory patterns %s", options.paved.clean.dirpatterns)
+    for wd in options.paved.clean.dirs:
+        info("Cleaning recursively in %s", wd)
+        for p in options.paved.clean.dirpatterns:
+            for f in list(wd.walkdirs(p)):
+                f.rmtree()
+
 
 class MyEncoder (JSONEncoder):
     def default(self, o):
