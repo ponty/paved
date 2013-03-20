@@ -6,7 +6,7 @@ from paver.easy import options, task, sh, needs, path
 from paver.options import Bunch
 
 
-__all__ = ['pycheckall', 'sloccount', 'findimports', 'pyflakes', 'pychecker', 'nose']
+__all__ = ['pycheckall', 'sloccount', 'findimports', 'pyflakes', 'pychecker', 'nose', 'tox']
 
 
 util.update(
@@ -134,7 +134,21 @@ def nose():
     sh('nosetests {param}'.format(param=options.paved.pycheck.nose.param))
 
 @task
-@needs('sloccount', 'pychecker', 'pyflakes', 'findimports', 'nose')
+def tox():
+    '''Run tox.
+       
+    requirements:
+     - tox_ should be installed.
+
+    options.paved.pycheck.nose.param
+    
+    .. _tox: http://codespeak.net/tox/
+    '''
+    sh('tox')
+
+
+@task
+@needs('sloccount', 'pychecker', 'pyflakes', 'findimports', 'nose', 'tox')
 def pycheckall():
     '''All pycheck tasks.
     '''
