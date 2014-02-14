@@ -154,7 +154,7 @@ def find_pdf_file():
     if not len(pdf_list):
         return
     # TODO: how to choose the correct pdf file?
-    pdf_file = sorted(pdf_list)[0]  # choose shortest
+    pdf_file = sorted(pdf_list, key=len)[0]  # choose shortest
     return pdf_file
 
 
